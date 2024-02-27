@@ -43,6 +43,7 @@ class UserOutRegister(UserBase):
     pass
 
 class UserShow(UserBase):
+    id: int
     first_name: str | None = None
     last_name: str | None = None
     brithdate: datetime | None = None
