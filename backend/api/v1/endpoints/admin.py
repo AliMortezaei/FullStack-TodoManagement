@@ -22,4 +22,13 @@ async def get_all_users(
     
     return await CRUDUser(db_session).get_all_user()
 
+
+@router.get('/{username}', response_description="admin retrieve all users")
+async def get_users(
+    username: str,
+    db_session: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user(RoleEnum.PRODUCER))
+) -> UserShow:
     
+    return await CRUDUser(db_session).get_by_username(username)
+

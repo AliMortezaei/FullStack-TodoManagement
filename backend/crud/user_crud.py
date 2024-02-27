@@ -115,7 +115,13 @@ class CRUDUser(CRUDBase[User, IUserCreate]):
         )
         return AccessTokenOut(token= access_token, token_type= TokenType.ACCESS_TOKEN.value)
 
+    async def get_by_username(self, username: str) -> User:
+        user = await self.adapter.get_by_username(username)
+        if user is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "User in Found")
+        return user
 
+        
         
 
 
