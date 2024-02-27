@@ -7,7 +7,7 @@ from sqlmodel import select
 from crud.crud_base import CRUDBase
 from db.models.item_model import Item
 from db.models.user_model import User
-from schema.item_schema import ItemCreate, ItemSchema
+from schema.item_schema import ItemCreate, ItemSchema, ItemUpdate
 from utils.context_manager import StorageLocalFile
 from db.repository.item_repository import ItemRepository
 
@@ -39,3 +39,10 @@ class CRUDItem(CRUDBase[Item, ItemCreate]):
                 if item is None:
                     raise HTTPException(status_code=404, detail="Item not found")
                 return item
+
+
+
+        
+
+
+            

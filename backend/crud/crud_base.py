@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, Type, List
+from typing import Any, Generic, TypeVar, Type, List
 from uuid import UUID
 
 from fastapi.encoders import jsonable_encoder
@@ -13,6 +13,7 @@ from fastapi import status, HTTPException
 
 ModelType = TypeVar("ModelType", bound=SQLModel)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType]):
@@ -56,3 +57,20 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
         await self.db_session.delete(obj)
         await self.db_session.commit()
         return obj
+
+    async def update(
+        self,
+        *,
+        obj_current: ModelType,
+        data_in: UpdateSchemaType | dict[str, Any] | ModelType,
+    ) -> ModelType:
+        
+        update_data = data_in.model_dump()
+        for field in update_data:
+            if update_data[field] is not None:
+                setattr(obj_current, field, update_data[field])
+
+        self.db_session.add(obj_current)
+        await self.db_session.commit()
+        await self.db_session.refresh(obj_current)
+        return obj_current

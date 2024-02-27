@@ -18,3 +18,8 @@ class ItemCreate(ItemSchema):
     image: str | None = Field(default=None)
     user: int   
 
+class ItemUpdate(BaseModel):
+    name: str | None = Field(default=None)
+    description: str | None = Field(default=None)
+    image: str | None = Field(default=None)
+

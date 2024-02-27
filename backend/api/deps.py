@@ -91,9 +91,10 @@ def get_current_user(
 def storage_file(
     image: UploadFile = File(default=None, description="image for item")
 ):
-    with StorageLocalFile(image.filename) as f:
-        shutil.copyfileobj(image.file, f)
-    return f.name
+    if image is not None:
+        with StorageLocalFile(image.filename) as f:
+            shutil.copyfileobj(image.file, f)
+        return f.name
 
 def permission_checker(
     required_permissions: List[ModelPermission], user_role: str
