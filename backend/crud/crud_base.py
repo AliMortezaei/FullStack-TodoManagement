@@ -1,7 +1,6 @@
 from typing import Generic, TypeVar, Type, List
 from uuid import UUID
 
-from utils import uuid
 from fastapi.encoders import jsonable_encoder
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy import exc
@@ -48,4 +47,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
         query = select(self.model).limit(limit)
         response = await self.db_session.exec(query)
         return [res for res in response]
-        
+    
+    async def remove(self, *, id: UUID | str ) -> ModelType:
+        response = await self.db_session.execute(
+            select(self.model).where(self.model.id == id)
+        )
+        obj = response.scalar_one()
+        await self.db_session.delete(obj)
+        await self.db_session.commit()
+        return obj

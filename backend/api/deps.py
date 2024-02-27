@@ -16,7 +16,6 @@ from core.security import TokenFactory
 from crud.user_crud import CRUDUser
 from core.config import settings
 from db.models.permissions import ModelPermission
-# from deps.user_deps import permission_checker
 from utils.context_manager import StorageLocalFile
 
 
@@ -111,4 +110,8 @@ def permission_checker(
 
 
 
-    
+
+
+
+
+     

@@ -19,4 +19,8 @@ class ItemRepository():
         query = select(User, Item).join(Item).where(User.id == user_id)
         response = await self.db_session.execute(query)
         return [res.Item for res in response]
-        
+
+    async def get_item_by_user(self, user_id: int, item_id: int) -> Item | None:
+        query = select(Item).join(User).where(Item.id == item_id, User.id == user_id)
+        response = await self.db_session.execute(query)
+        return response.scalar_one_or_none()
