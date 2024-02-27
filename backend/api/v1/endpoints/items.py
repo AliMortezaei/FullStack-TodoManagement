@@ -51,7 +51,7 @@ async def delete_item(
 
     return await crud.remove(id=item.id)
 
-@router.put('/')
+@router.put('/{item_id}')
 async def update_item(
     item_id: int,
     name: str = Form(default=None, description="name for item in update"),
@@ -70,6 +70,24 @@ async def update_item(
         obj_current=item,
         data_in=ItemUpdate(name=name, description=description, image=image)
     )
+
+@router.get('/{item_id}')
+async def get_item(
+    item_id: int,
+    current_user: User = Depends(get_current_user([
+        ItemPermission.permissions.READ, ItemPermission.permissions.DELETE, ItemPermission.permissions.UPDATE
+    ])),
+    db_session: AsyncSession = Depends(get_db),
+) -> ItemSchema: 
+
+    return await CRUDItem(db_session).get_item(item_id, current_user.id)
+    
+
+
+
+
+
+
 
 
 

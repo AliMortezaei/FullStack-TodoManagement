@@ -9,6 +9,7 @@ from db.models.item_model import Item
 from db.models.user_model import User
 from schema.item_schema import ItemCreate, ItemSchema, ItemUpdate
 from utils.context_manager import StorageLocalFile
+from core.config import settings
 from db.repository.item_repository import ItemRepository
 
 
@@ -36,6 +37,7 @@ class CRUDItem(CRUDBase[Item, ItemCreate]):
                 pass
             case int:
                 item = await self.adapter.get_item_by_user(user_id, item_id)
+               # item.image = f"http://{settings.ALLOWED_HOSTS}/{(item.image).decode()}"
                 if item is None:
                     raise HTTPException(status_code=404, detail="Item not found")
                 return item
