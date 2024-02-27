@@ -51,12 +51,14 @@ class UserRepository():
 
     async def all_user(self, limit) -> list:
         query = select(
+            User.id,
             User.username,
             User.email,
             User.phone,
             User.first_name,
             User.last_name,
-            User.brithdate
+            User.brithdate,
+            User.image
         ).limit(limit)
         response = await self.db_session.execute(query)
         return  [res for res in response]

@@ -1,5 +1,5 @@
 import shutil
-from typing import Any, List, Annotated
+from typing import Any, Iterable, List, Annotated
 from collections.abc import AsyncGenerator
 
 from jose import  JWTError, jwt, ExpiredSignatureError
@@ -7,6 +7,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, Header, HTTPException, UploadFile, status, File
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from schema.role_schema import RoleEnum
 from schema.permission_schema import get_role_permissions
 from schema.token_schema import TokenType
 from schema.user_schema import IUserCreate
@@ -38,7 +39,7 @@ def get_header(
 
 
 def get_current_user(
-    required_permission: List[ModelPermission] = None
+    required_permission: List[ModelPermission] | RoleEnum = None
 ):
     async def current_user(
         access_token: str = Depends(get_header),
@@ -75,7 +76,7 @@ def get_current_user(
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail='User not found')
         if not user.is_active:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST , detail='Inactive User')
-
+        print(required_permission   )
         roles_validate = permission_checker(required_permission, user.role.name)
         if roles_validate is False:
             raise HTTPException(
@@ -97,9 +98,11 @@ def storage_file(
         return f.name
 
 def permission_checker(
-    required_permissions: List[ModelPermission], user_role: str
+    required_permissions: List[ModelPermission] | RoleEnum, user_role: str
 ): 
-    
+    if type(required_permissions) is RoleEnum:
+        required_permissions = get_role_permissions(required_permissions)
+    # print(type(required_permissions))
     roles = get_role_permissions(user_role)
     for i in range(0,len(roles)):
         for permission in required_permissions:

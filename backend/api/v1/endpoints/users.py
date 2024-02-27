@@ -14,13 +14,6 @@ from schema.permission_schema import UserPermission
 
 router = APIRouter()
 
-# @router.get("/list")
-# async def user_list(
-#     db_session: AsyncSession = Depends(get_db),
-#     current_user: User = Depends(get_current_user(RoleEnum.PRODUCER))
-# ) -> List[UserShow] :
-    
-#     return await CRUDUser(db_session).get_all_user()
 
 @router.get('/')
 async def retierve_user_profile(

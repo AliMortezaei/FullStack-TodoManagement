@@ -11,7 +11,7 @@ class ItemPermission(ModelPermissions):
 
 
 
-ROLE_ENUM_PERMISSIONS = {
+ROLE_PERMISSIONS = {
     RoleEnum.PRODUCER: [
         [
             UserPermission.permissions.CREATE,
@@ -42,7 +42,9 @@ ROLE_ENUM_PERMISSIONS = {
 
 def get_role_permissions(role: RoleEnum):
     permissions = set()
-    for permissions_group in ROLE_ENUM_PERMISSIONS[role]:
+    for permissions_group in ROLE_PERMISSIONS[role]:
         for permission in permissions_group:
             permissions.add(str(permission))
     return list(permissions)
+
+

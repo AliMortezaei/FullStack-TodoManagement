@@ -77,13 +77,16 @@ class CRUDUser(CRUDBase[User, IUserCreate]):
 
     async def get_all_user(self, limit: int=10) :
         users = await self.adapter.all_user(limit)
+        
         return [UserShow(
-            username= user[0],
-            email= user[1],
-            phone= user[2],
-            first_name= user[3],
-            last_name= user[4],
-            brithdate= user[5]
+            id= user[0],
+            username= user[1],
+            email= user[2],
+            phone= user[3],
+            first_name= user[4],
+            last_name= user[5],
+            brithdate= user[6],
+            image= user[7]
         ) for user in users]
         
 
