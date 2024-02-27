@@ -21,6 +21,7 @@ aiosqlite = "^0.20.0"
 python-dotenv = "^1.0.1"
 python-multipart = "^0.0.9"
 pillow = "^10.2.0"
+alembic = "^1.13.1"
 
 
 [build-system]
