@@ -9,6 +9,7 @@ from fastapi import status, HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
 from pydantic import Field
 
+from core.config import settings
 from core.redis import RedisManager, get_redis_db
 from schema.user_schema import RoleEnum
 from db.models import User
@@ -40,9 +41,10 @@ class CRUDUser(CRUDBase[User, IUserCreate]):
             
         return user
 
-    async def create_user(self, data_in: IUserCreate, hashed_password: str):# -> UserOutRegister:
+    async def create_user(self, data_in: IUserCreate, hashed_password: str) -> UserOutRegister:
         delattr(data_in, "confirm_password")
         data_in.password = hashed_password
+        data_in.image = settings.DEFULT_IMAGE
         obj_data = User.model_validate(data_in)
         result = await self.create(obj_data)
         return obj_data

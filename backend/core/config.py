@@ -9,6 +9,7 @@ class Settings(BaseModel):
     DATABASE_URL: str = "sqlite+aiosqlite:///./sql_app.db"
     SECRET_KEY: str = "test@asfwdv333dscc1233"
     EMAIL_kEY: str = b'testkey'
+    DEFULT_IMAGE: str = f"http://{ALLOWED_HOSTS}:8080/media/IMG_20240221_193907_257.jpg"
     JWT_ALGORITHM: str = 'HS256'
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 1  
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 100  # 100 days

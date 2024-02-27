@@ -16,7 +16,7 @@ class UserBase(BaseModel):
     username: str 
     email: EmailStr 
     phone: str = Field(max_length=11)
-
+    image: str | None = Field(default=None)
 
 class IUserCreate(UserBase):
     
