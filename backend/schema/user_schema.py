@@ -47,4 +47,11 @@ class UserShow(UserBase):
     first_name: str | None = None
     last_name: str | None = None
     brithdate: datetime | None = None
-    
+    image: str | None = Field(default=None)
+
+class UserProfileUpdate(BaseModel):
+
+    first_name: str | None = None
+    last_name: str | None = None
+    brithdate: datetime | None = None
+    image: str | None = Field(default=None)

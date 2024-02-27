@@ -89,7 +89,7 @@ def get_current_user(
     
 
 def storage_file(
-    image: UploadFile = File(default=None, description="image for item")
+    image: UploadFile = File(default=None, description="media image")
 ):
     if image is not None:
         with StorageLocalFile(image.filename) as f:

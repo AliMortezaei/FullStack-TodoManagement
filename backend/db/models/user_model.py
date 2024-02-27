@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Optional, List
 
 from pydantic import EmailStr
+from sqlalchemy import BINARY
 from sqlmodel import SQLModel, Field, Column, DateTime, Relationship, Enum, String
 
 from .base_model import BaseUUIDModel
@@ -22,7 +23,7 @@ class UserBase(SQLModel):
     
 
 class User(BaseUUIDModel, UserBase, table= True):
-
+    image: bytes = Field(BINARY, nullable=True)
     role_id: int = Field(foreign_key="role.id", default= 0)
     is_active: bool = Field(default=False)
     password: str | None = Field(
