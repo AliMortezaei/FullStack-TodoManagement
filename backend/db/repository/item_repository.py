@@ -1,5 +1,6 @@
 
 from typing import Iterable
+from fastapi import Depends
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -15,8 +16,15 @@ class ItemRepository():
         
         self.db_session = db_session
 
-    async def get_item_all_by_user(self, user_id: int) -> Iterable[Item]:
-        query = select(User, Item).join(Item).where(User.id == user_id)
+    def get_items_query(self, user: int | str ):
+        if isinstance(user ,int):
+                return select(User, Item).join(Item).where(User.id == user)
+        elif isinstance(user, str):
+                return select(User, Item).join(Item).where(User.username == user)
+
+            
+    async def get_item_all_by_user(self, user: str| int) -> Iterable[Item]:
+        query = self.get_items_query(user)
         response = await self.db_session.execute(query)
         return [res.Item for res in response]
 

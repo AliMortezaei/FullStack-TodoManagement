@@ -24,12 +24,15 @@ class CRUDItem(CRUDBase[Item, ItemCreate]):
         obj_data = Item.model_validate(data_in)
         return await self.create(obj_data)
 
-    async def get_items(self, user_id: int = None) -> List[ItemSchema]:
-        match type(user_id):
+    async def get_items(self, user: int | str = None) -> List[ItemSchema]:
+        match type(user):
             case None:
                 pass
             case int: 
-                return await self.adapter.get_item_all_by_user(user_id)
+                item = await self.adapter.get_item_all_by_user(user)
+                if not  item:
+                    raise HTTPException(status_code=404, detail="not found")
+                return item
 
     async def get_item(self, item_id: int, user_id: int = None):
         match type(user_id):
