@@ -22,17 +22,20 @@ class CRUDItem(CRUDBase[Item, ItemCreate]):
     async def create_item(self, data_in: ItemCreate) -> ItemSchema:
         
         obj_data = Item.model_validate(data_in)
-        return await self.create(obj_data)
-
+        item =  await self.create(obj_data)
+        item.image = f"http://{settings.ALLOWED_HOSTS}:{settings.PORT_HOST}/{(item.image).decode()}"
+        return item
     async def get_items(self, user: int | str = None) -> List[ItemSchema]:
         match type(user):
             case None:
                 pass
             case int: 
-                item = await self.adapter.get_item_all_by_user(user)
-                if not  item:
+                items = await self.adapter.get_item_all_by_user(user)
+                for item in items:
+                    item.image = f"http://{settings.ALLOWED_HOSTS}:{settings.PORT_HOST}/{(item.image).decode()}"
+                if not items:
                     raise HTTPException(status_code=404, detail="not found")
-                return item
+                return items
 
     async def get_item(self, item_id: int, user_id: int = None):
         match type(user_id):
@@ -40,7 +43,7 @@ class CRUDItem(CRUDBase[Item, ItemCreate]):
                 pass
             case int:
                 item = await self.adapter.get_item_by_user(user_id, item_id)
-               # item.image = f"http://{settings.ALLOWED_HOSTS}/{(item.image).decode()}"
+                item.image = f"http://{settings.ALLOWED_HOSTS}:{settings.PORT_HOST}/{(item.image).decode()}"
                 if item is None:
                     raise HTTPException(status_code=404, detail="Item not found")
                 return item

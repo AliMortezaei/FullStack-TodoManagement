@@ -40,7 +40,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
         self,
         model_id: int 
     ) -> ModelType:
-        query = select(self.model).where(self.model.id == model_id)
+        query = select(self.model).where(self.model.id == int(model_id))
         response = await self.db_session.execute(query)
         return response.scalar_one_or_none()
     

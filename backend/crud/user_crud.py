@@ -1,17 +1,12 @@
-from typing import List
 from datetime import timedelta
-from uuid import uuid4, UUID
-from typing import Annotated
 
-from jose import jwe, ExpiredSignatureError
+
 from sqlmodel.ext.asyncio.session import AsyncSession
 from fastapi import status, HTTPException, Depends
-from fastapi.encoders import jsonable_encoder
 from pydantic import Field
 
 from core.config import settings
-from core.redis import RedisManager, get_redis_db
-from schema.user_schema import RoleEnum
+from core.redis import RedisManager
 from db.models import User
 from crud.crud_base import CRUDBase, ModelType
 from schema.user_schema import IUserCreate, UserOutRegister, UserLogin,UserShow
