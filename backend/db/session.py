@@ -8,11 +8,11 @@ from core.config import settings
 
 db_url = URL.create(
     "postgresql+asyncpg",
-    username= settings.DATABASE_USER,
-    password= settings.DATABASE_PASSWORD,
-    host= settings.DATABASE_HOST,
-    port= settings.DATABASE_PORT,
-    database= settings.DATABASE_NAME,
+    username= settings.POSTGRES_USER,
+    password= settings.POSTGRES_PASSWORD,
+    host= settings.POSTGRES_HOST,
+    port= settings.POSTGRES_PORT,
+    database= settings.POSTGRES_DB,
 )
 
 engine = create_async_engine(

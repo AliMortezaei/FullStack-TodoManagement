@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     ALLOWED_HOSTS: str = os.environ["ALLOWED_HOSTS"]
     SECRET_KEY: str = "test@asfwdv333dscc1233"
     EMAIL_kEY: str = b'testkey'
-    DEFULT_IMAGE: str = f"http://{ALLOWED_HOSTS}:{PORT_HOST}/media/IMG_20240221_193907_257.jpg"
+    DEFULT_IMAGE: bytes = f"http://{ALLOWED_HOSTS}:{PORT_HOST}/media/IMG_20240221_193907_257.jpg"
     JWT_ALGORITHM: str = 'HS256'
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 1  
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 100  # 100 days
@@ -33,13 +33,19 @@ class Settings(BaseSettings):
     # redis server
     REDIS_HOST: str = os.environ["REDIS_HOST"]
     REDIS_PORT: str = os.environ["REDIS_PORT"]
-    REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}"
+    REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/"
+    # postgres db
+    POSTGRES_USER: str = os.environ["POSTGRES_USER"]
+    POSTGRES_PASSWORD: str = os.environ["POSTGRES_PASSWORD"]
+    POSTGRES_HOST: str = os.environ["POSTGRES_HOST"]
+    POSTGRES_PORT: str = os.environ["POSTGRES_PORT"]
+    POSTGRES_DB: str = os.environ["POSTGRES_DB"]
 
-    DATABASE_USER: str = os.environ["DATABASE_USER"]
-    DATABASE_PASSWORD: str = os.environ["DATABASE_PASSWORD"]
-    DATABASE_HOST: str = os.environ["DATABASE_HOST"]
-    DATABASE_PORT: str = os.environ["DATABASE_PORT"]
-    DATABASE_NAME: str = os.environ["DATABASE_NAME"]
+    # user initial producer
+    PRODUCER_USERNAME: str = os.environ["PRODUCER_USERNAME"]
+    PRODUCER_PHONE: str = os.environ["PRODUCER_PHONE"]
+    PRODUCER_EMAIL: str = os.environ["PRODUCER_EMAIL"]
+    PRODUCER_PASSWORD: str = os.environ["PRODUCER_PASSWORD"]
     
     
 
