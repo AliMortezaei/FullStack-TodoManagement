@@ -6,10 +6,7 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field, ConfigDict, model_validator
 
 
-class RoleEnum(Enum):
-    User = auto()
-    Consultant = auto()    
-    
+
 
 class UserBase(BaseModel):
 

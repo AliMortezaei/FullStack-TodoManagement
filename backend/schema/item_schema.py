@@ -12,11 +12,11 @@ class ItemSchema(BaseModel):
     description: str | None = Field(default=None)
     image: str | None = Field(default=None)
     
-class ItemCreate(ItemSchema):
+class ItemCreate(BaseModel):
     name: str 
     description: str | None = Field(default=None)
     image: str | None = Field(default=None)
-    user: int   
+    user: int | str  
 
 class ItemUpdate(BaseModel):
     name: str | None = Field(default=None)

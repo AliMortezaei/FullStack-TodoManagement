@@ -35,8 +35,6 @@ class User(BaseUUIDModel, UserBase, table= True):
     items : list['Item'] = Relationship(
         back_populates="user", sa_relationship={"lazy" : "selection"}
     )
-    class config:
-        orm_model = True
 
 
 

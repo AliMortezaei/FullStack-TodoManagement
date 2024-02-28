@@ -6,7 +6,7 @@ from schema.role_schema import RoleEnum
 
 class RoleBase(SQLModel):
     name: str = Field(nullable=False)
-    discription: str
+    description: str
 
 class Role(BaseUUIDModel ,RoleBase, table=True):
     users: list["User"] = Relationship(
